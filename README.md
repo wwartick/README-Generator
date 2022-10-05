@@ -25,7 +25,7 @@
 
   ## Usage
 
-  [Finished Readme](assets/images/ss.png)
+  ![Finished Readme](assets/images/ss.png)
 
   ## License 
   This project has a [IBM](https://opensource.org/licenses/IPL-1.0) license (doesn't really, just said so for the demonstration video)
