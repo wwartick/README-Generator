@@ -41,7 +41,7 @@ const questions= [
             type: 'list',
             name: 'license',
             message: 'Please choose your project license:',
-            choices: ['MIT', 'APACHE 2.0', 'GPL 3.0', 'BSD 3'],
+            choices: ['MIT', 'Boost', 'Apache', 'IBM'],
             when: ({ confirmLicense }) => {
                 if (confirmLicense) {
                     return true;
