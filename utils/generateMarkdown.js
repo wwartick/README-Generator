@@ -48,7 +48,7 @@ function renderLicenseSection(license) {
   if (!license){
     return '';
   }
-  return `##License 
+  return `## License 
   This project has a [${license}](${renderLicenseLink(license)}) license`;
 };
 
@@ -59,19 +59,56 @@ function createTable(license){
   }else {
     var contents = ['installation', 'usage','contributing','tests', 'questions'];
   }
+
   var table ='';
   for (var i=0; i<contents.length; i++){
-    table += `* [${list[i].charAt(0).toUpperCase() + list[i].slice(1)}](#${list[i]})
-    `;
+    table += `* [${contents[i].charAt(0).toUpperCase() + contents[i].slice(1)}](#${contents[i]}) 
+`;
   };
   return table;
 };
 
 // TODO: Create a function to generate markdown for README
 function generateMarkdown(data) {
-  return `# ${data.title}
+  return `# ${data.project}
 
-  ${renderLicenseBadge}
+  ${renderLicenseBadge(data.license)}
+
+  ## Description
+
+  ${data.description}
+
+  ## Table of Contents
+
+  ${createTable(data.license)}
+
+  ## Installation 
+
+  To install the dependencies used - run the following command:
+  \`\`\`
+  ${data.install}
+  \`\`\`
+
+  ## Usage
+
+  ${data.usage}
+
+  ${renderLicenseSection(data.license)}
+
+  ## Contributing
+
+  ${data.contribute}
+
+  ## Tests
+
+  To run tests, run the following command: 
+  \`\`\`
+  ${data.test}
+  \`\`\`
+
+  ## Questions
+
+  If you have any questions about this project, email me at [${data.email}](mailto:${data.email}). You can see more of my work at [${data.github}](https://github.com/${data.github}) on GitHub.
 
 `;
 }
