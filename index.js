@@ -1,10 +1,10 @@
-// TODO: Include packages needed for this application
+//  Include packages needed for this application
 const inquirer = require("inquirer");
 const fs = require('fs');
+const generateMarkdown = require('./utils/generateMarkdown.js');
 
-// TODO: Create an array of questions for user input
-const promptUser =()=>{
-    return inquirer.prompt([
+//  Create an array of questions for user input
+const questions= [
         {
          type: 'input',
          name: 'project',
@@ -32,6 +32,25 @@ const promptUser =()=>{
             },
            },
            {
+            type: 'confirm',
+            name: 'confirmLicense',
+            message: 'Does your project have a license?',
+            default: true
+             },
+           {
+            type: 'list',
+            name: 'license',
+            message: 'Please choose your project license:',
+            choices: ['MIT', 'APACHE 2.0', 'GPL 3.0', 'BSD 3'],
+            when: ({ confirmLicense }) => {
+                if (confirmLicense) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+        },
+           {
             type: 'input',
             name: 'install',
             message: 'What instructions are needed for installation?(Required)',
@@ -47,7 +66,7 @@ const promptUser =()=>{
            {
             type: 'input',
             name: 'usage',
-            message: 'What would you like to show the user?(Required)',
+            message: 'What usage instructions/examples do you have for the user?(Required)',
             validate: input=>{
                if (input) {
                    return true;
@@ -107,15 +126,36 @@ const promptUser =()=>{
                    console.log('Please enter your email!')
                    return false;
                }
-            },
+            }
            }
-    ])
-}
+    ];
+
 // TODO: Create a function to write README file
-function writeToFile(fileName, data) {}
+const writeToFile = (fileName, data) => {
+
+    return new Promise((resolve, reject) => {
+        fs.writeFile(fileName, data, err =>{
+            if (err){
+                reject(err);
+                return;
+            }
+            resolve({
+                ok:true, 
+                message: 'File Created!'
+            });
+        });
+    });
+};
 
 // TODO: Create a function to initialize app
-function init() {}
+function init() {
+    return inquirer.prompt(questions)
+    .then(answers=>{
+        console.log('Creating your README.md...');
+
+        writeToFile('./dist/README.md', generateMarkdown(answers));
+    });
+};
 
 // Function call to initialize app
 init();
