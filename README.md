@@ -20,7 +20,7 @@
 
   To install the dependencies used, run the following command:
   ```
-  npm i
+  node index.js
   ```
 
   ## Usage
